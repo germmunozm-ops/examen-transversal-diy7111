@@ -1,0 +1,65 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: db_container
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-vzeta_db}
+      POSTGRES_USER: ${DB_USER:-vzeta_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-Vzeta2026Seguro}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - vzeta_network
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${DB_USER:-vzeta_user} -d ${DB_NAME:-vzeta_db}"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  myapp:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    image: vzeta/myapp:1.0
+    container_name: myapp_container
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-vzeta_db}
+      DB_USER: ${DB_USER:-vzeta_user}
+      DB_PASSWORD: ${DB_PASSWORD:-Vzeta2026Seguro}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - vzeta_network
+
+  mynginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: vzeta/mynginx:1.0
+    container_name: mynginx_container
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      myapp:
+        condition: service_healthy
+    networks:
+      - vzeta_network
+
+networks:
+  vzeta_network:
+    name: vzeta_network
+    driver: bridge
+
+volumes:
+  postgres_data:
+    name: vzeta_postgres_data
