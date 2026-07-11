@@ -6,6 +6,12 @@
 
 ---
 
+
+**Repositorio GitHub:** https://github.com/germmunozm-ops/examen-transversal-diy7111
+
+**Acceso de prueba durante la implementación:** http://3.85.205.106
+
+
 ## 1. Descripción general
 
 Este proyecto implementa una aplicación web contenerizada sobre una instancia EC2 de AWS Learner Lab. La solución utiliza Docker Engine y Docker Compose para ejecutar tres servicios:
@@ -115,18 +121,23 @@ Para esta evaluación y para una aplicación pequeña, la alternativa recomendad
 ```text
 .
 ├── app/
-│   ├── app.py
-│   ├── requirements.txt
-│   └── Dockerfile
 ├── nginx/
-│   ├── default.conf
-│   └── Dockerfile
 ├── evidencias/
-├── .env.example
-├── .gitignore
 ├── docker-compose.yml
-└── README.md
+├── README.md
+├── .env.example
+└── .gitignore
 ```
+
+Archivos principales utilizados:
+
+- docker-compose.yml
+- app/Dockerfile
+- nginx/Dockerfile
+- nginx/default.conf
+- app/app.py
+- app/requirements.txt
+
 
 ---
 
@@ -146,7 +157,7 @@ Configuración solicitada:
 
 ### Evidencia 1 — Instancia EC2
 
-![Instancia EC2 creada](evidencias/01-ec2.png)
+![Instancia EC2 creada](evidencias/01-ec2-instancia.png)
 
 ---
 
@@ -195,7 +206,7 @@ docker run --rm hello-world
 
 ### Evidencia 2 — Docker instalado
 
-![Docker instalado](evidencias/02-docker-version.png)
+![Docker instalado](evidencias/02-docker-engine.png)
 
 ---
 
@@ -253,7 +264,7 @@ docker images
 
 ### Evidencia 3 — Imágenes construidas
 
-![Imágenes Docker](evidencias/03-docker-images.png)
+![Imágenes Docker](evidencias/03-build-imagenes.png)
 
 ---
 
@@ -280,7 +291,7 @@ docker ps
 
 ### Evidencia 4 — Stack levantado
 
-![Docker Compose operativo](evidencias/04-compose-ps.png)
+![Docker Compose operativo](evidencias/04-compose-up.png)
 
 ---
 
@@ -308,11 +319,11 @@ Actualizar varias veces la página para comprobar que el contador aumenta.
 
 ### Evidencia 5 — Aplicación funcionando
 
-![Aplicación en navegador](evidencias/05-aplicacion.png)
+![Aplicación en navegador](evidencias/05-compose-ps.png)
 
 ### Evidencia 6 — Prueba con curl
 
-![Prueba curl](evidencias/06-curl.png)
+![Prueba curl](evidencias/06-aplicacion-localhost.png)
 
 ---
 
@@ -349,11 +360,11 @@ Volver a ingresar a la aplicación. El contador debe continuar desde el valor al
 
 ### Evidencia 7 — Volumen creado
 
-![Volumen persistente](evidencias/07-volume-ls.png)
+![Volumen persistente](evidencias/07-aplicacion-ip-publica.png)
 
 ### Evidencia 8 — Persistencia comprobada
 
-![Persistencia del contador](evidencias/08-persistencia.png)
+![Persistencia del contador](evidencias/08-volumen-postgres.png)
 
 ---
 
@@ -393,11 +404,11 @@ docker image inspect vzeta/myapp:1.0
 
 ### Evidencia 9 — Mounts de PostgreSQL
 
-![Inspect Mounts](evidencias/09-inspect-mounts.png)
+![Inspect Mounts](evidencias/09-docker-inspect.png)
 
 ### Evidencia 10 — Red Docker
 
-![Inspect red](evidencias/10-inspect-network.png)
+![Inspect red](evidencias/10-persistencia-datos.png)
 
 ### Evidencia 11 — Imagen Flask
 
